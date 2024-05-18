@@ -5,7 +5,6 @@ import os
 from time import time, strftime
 
 from flask import Flask, jsonify, request, render_template, Response
-from prometheus_client import multiprocess, generate_latest, CollectorRegistry, CONTENT_TYPE_LATEST, Counter, Histogram
 
 from api_common import get_device_builds, get_oems, get_device_data
 from changelog.gerrit import GerritJSONProvider
@@ -34,33 +33,6 @@ def version():
 
 
 app.jinja_env.globals.update(version=version)
-
-
-##########################
-# Metrics
-##########################
-REQUEST_LATENCY = Histogram('flask_request_latency_seconds', 'Request Latency', ['method', 'endpoint'])
-REQUEST_COUNT = Counter('flask_request_count', 'Request Count', ['method', 'endpoint', 'status'])
-
-
-@app.before_request
-def start_timer():
-    request.stats_start = time()
-
-
-@app.after_request
-def stop_timer(response):
-    delta = time() - request.stats_start
-    REQUEST_LATENCY.labels(request.method, request.endpoint).observe(delta)
-    REQUEST_COUNT.labels(request.method, request.endpoint, response.status_code).inc()
-    return response
-
-
-@app.route('/metrics')
-def metrics():
-    registry = CollectorRegistry()
-    multiprocess.MultiProcessCollector(registry)
-    return Response(generate_latest(registry), mimetype=CONTENT_TYPE_LATEST)
 
 
 ##########################

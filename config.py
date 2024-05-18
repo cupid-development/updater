@@ -22,6 +22,3 @@ class Config(object):
 class FlaskConfig(object):
     CACHE_DEFAULT_TIMEOUT = int(os.environ.get('CACHE_DEFAULT_TIMEOUT', '3600'))
     CACHE_TYPE = os.environ.get('CACHE_TYPE', 'simple')
-    CACHE_REDIS_HOST = os.environ.get('CACHE_REDIS_HOST', 'redis')
-    CACHE_REDIS_DB = os.environ.get('CACHE_REDIS_DB', 4)
-    CACHE_REDIS_PASSWORD = os.environ.get("CACHE_REDIS_PASSWORD", None)

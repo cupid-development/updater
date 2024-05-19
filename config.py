@@ -20,5 +20,5 @@ class Config(object):
 
 
 class FlaskConfig(object):
-    CACHE_DEFAULT_TIMEOUT = int(os.environ.get('CACHE_DEFAULT_TIMEOUT', '3600'))
+    CACHE_DEFAULT_TIMEOUT = int(os.environ.get('CACHE_DEFAULT_TIMEOUT', '120'))
     CACHE_TYPE = os.environ.get('CACHE_TYPE', 'simple')

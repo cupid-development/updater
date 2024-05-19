@@ -7,7 +7,7 @@ COPY . /app
 WORKDIR /app
 
 ENV GERRIT_URL "https://review.lineageos.org"
-ENV CACHE_DEFAULT_TIMEOUT "3600"
+ENV CACHE_DEFAULT_TIMEOUT "120"
 ENV CACHE_TYPE "simple"
 ENV WIKI_INSTALL_URL "https://wiki.lineageos.org/devices/{device}/install"
 ENV WIKI_INFO_URL "https://wiki.lineageos.org/devices/{device}"

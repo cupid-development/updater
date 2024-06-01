@@ -11,6 +11,8 @@ from custom_exceptions import UpstreamApiException, DeviceNotFoundException
 
 import extensions
 
+RENAMED_DEVICES = {"taranis": "thor", "dagda": "zeus"}
+
 @extensions.cache.memoize()
 def get_builds():
     try:
@@ -28,6 +30,8 @@ def get_devices_with_builds():
 
 @extensions.cache.memoize()
 def get_device_builds(device):
+    device = RENAMED_DEVICES.get(device, device)
+
     builds = get_builds()
     if device not in builds:
         return []
@@ -93,6 +97,8 @@ def get_devices_data():
 
 @extensions.cache.memoize()
 def get_device_data(device):
+    device = RENAMED_DEVICES.get(device, device)
+
     devices_data = get_devices_data()
 
     for device_data in devices_data:
